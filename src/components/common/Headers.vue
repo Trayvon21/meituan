@@ -246,7 +246,7 @@ export default {
           padding: 30px 36px 36px 47px;
           position: absolute;
           right: 0;
-          display: flex;
+          display: none;
           justify-content: space-between;
           .navigator-title {
             text-align: center;
@@ -260,7 +260,10 @@ export default {
               width: 90px;
               height: 30px;
             }
-            img{
+            > div:hover {
+              color: #fc9a50;
+            }
+            img {
               width: 60px;
             }
           }

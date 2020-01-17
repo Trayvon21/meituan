@@ -3,8 +3,18 @@
     <div class="mainNav-all">
       <div>全部分类</div>
       <ul class="sidebar">
-        <li></li>
+        <li class="sidebar-each" v-for="item in menu" :key="item.id" @mouseenter="show(item)" @mouseleave="childs={}">
+          <i :style="{color:item.color}" class="iconfont" :class="`icon-${item.type}`"></i>
+          {{item.name}}
+          <span class="sidebar-right">&gt;</span>
+        </li>
       </ul>
+    </div>
+    <div class="sidebar-nav" v-if="childs.title">
+      <div class="nav-title">
+        {{title}}
+        <span class="title-right"></span>
+      </div>
     </div>
     <div class="nav-link">
       <div v-for="item in navLink" :key="item.id">{{item.name}}</div>
@@ -23,13 +33,49 @@ export default {
         { name: "民宿/公寓" },
         { name: "商家入驻" },
         { name: "美团公益" }
-      ]
+      ],
+      menu: [],
+      setColor: [
+        "#FF8200",
+        "#FFC63B",
+        "#9B5E3E",
+        "#FFB500",
+        "#FF3D00",
+        "#50C3F7",
+        "#00BF96",
+        "#00BF96",
+        "#FF4081",
+        "#FF4081",
+        "#FF4081",
+        "#03A9F4",
+        "#00BF96",
+        "#00BF96",
+        "#03A9F4",
+        "#00BF96"
+      ],
+      childs: {}
     };
   },
   props: {},
   components: {},
-  methods: {},
-  mounted() {},
+  methods: {
+    getMenuData() {
+      this.$api.getMenu().then(res => {
+        if (res.code === 200) {
+          this.menu = res.data.menu;
+          this.menu.map((item, index) => {
+            item.color = this.setColor[index];
+          });
+        }
+      });
+    },
+    show(item) {
+      this.childs = item.child;
+    }
+  },
+  mounted() {
+    this.getMenuData();
+  },
   watch: {},
   computed: {}
 };
@@ -58,6 +104,22 @@ export default {
     .sidebar {
       width: 228px;
       height: 425px;
+      .sidebar-each {
+        height: 26px;
+        padding: 2px 12px;
+        cursor: pointer;
+        color: #646464;
+        i {
+          margin-right: 12px;
+        }
+        .sidebar-right {
+          float: right;
+        }
+      }
+      .sidebar-each:hover {
+        background: rgb(255, 247, 235);
+        color: black;
+      }
     }
   }
   .nav-link {

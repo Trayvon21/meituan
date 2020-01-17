@@ -4,13 +4,12 @@
       <Icon type="ios-pin" size="16" />
     </div>
     <div>{{city='成都'}}</div>
-    <div class="citys-near">
-      [
-      <div>{{city='成都'}}</div>
-      <div>{{city='成都'}}</div>
-      <div>{{city='成都'}}</div>]
-    </div>
     <div class="citys-replace">切换城市</div>
+    <div class="citys-near">
+      <div>{{city='成都'}}</div>
+      <div>{{city='成都'}}</div>
+      <div>{{city='成都'}}</div>
+    </div>
   </div>
 </template>
 
