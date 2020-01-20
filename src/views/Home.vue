@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <headers />
-    <mian-nav />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import headers from "../components/common/Headers";
-import mianNav from "../components/common/MainNav";
+
 export default {
   data() {
     return {
@@ -18,7 +18,7 @@ export default {
   },
   props: {},
   components: {
-    headers,mianNav
+    headers
   },
   methods: {
     getPosition() {

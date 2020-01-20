@@ -122,19 +122,7 @@
             alt
           />
         </div>
-        <div class="header-search">
-          <Input
-            @on-focus="show=true"
-            @on-blur="show=false"
-            search
-            enter-button
-            size="large"
-            placeholder="搜索商家或地址"
-          />
-          <div v-if="show" class="search-box">
-            <div>热门搜索</div>
-          </div>
-        </div>
+        <headers-search></headers-search>
       </div>
     </div>
   </div>
@@ -142,14 +130,15 @@
 
 <script>
 import indexCity from "./HeaderCity";
+import headersSearch from "../HeadersSearch";
 export default {
   data() {
     return {
-      show: false
+     
     };
   },
   props: {},
-  components: { indexCity },
+  components: { indexCity,headersSearch },
   methods: {
     gotoHome() {
       if (this.$route.path === "/") {
@@ -299,43 +288,6 @@ export default {
         img {
           height: 46px;
           cursor: pointer;
-        }
-      }
-      .header-search {
-        padding-top: 28px;
-        height: 40px;
-        width: 550px;
-        position: relative;
-        /deep/ input {
-          border: 1px solid rgb(226, 226, 226);
-          font-size: 14px;
-          outline: none;
-          box-shadow: none;
-        }
-        /deep/ input:hover {
-          border: 1px solid rgb(226, 226, 226);
-          outline: none;
-          box-shadow: none;
-        }
-        /deep/ .ivu-input-group-append {
-          width: 80px;
-          background: #ffc300 !important;
-          border: 1px solid #ffc300 !important;
-          box-shadow: none;
-          .ivu-icon-ios-search {
-            color: black;
-            font-size: 26px;
-          }
-        }
-        .search-box {
-          position: absolute;
-          top: 69px;
-          left: 0;
-          width: 470px;
-          height: 70px;
-          background: white;
-          border: 1px solid gray;
-          z-index: 999;
         }
       }
     }

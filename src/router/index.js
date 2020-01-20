@@ -27,6 +27,17 @@ const routes = [{
         }]
     },
     {
+        //详情页
+        path: '/s/:name',
+        component: Home,
+        children: [{
+            path: '',
+            name: 'descs',
+            component: () =>
+                import ('../views/desc/Descs')
+        }]
+    },
+    {
         //登录
         path: '/login',
         name: 'login',

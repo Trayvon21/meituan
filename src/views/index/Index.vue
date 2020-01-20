@@ -1,14 +1,19 @@
 <template>
-  <div>1111</div>
+  <div>
+    <mian-nav />
+    <haveStyle />
+  </div>
 </template>
 
 <script>
+import mianNav from "../../components/MainNav";
+import haveStyle from "../../components/HaveStyle";
 export default {
   data() {
     return {};
   },
   props: {},
-  components: {},
+  components: { mianNav,haveStyle },
   methods: {},
   mounted() {},
   watch: {},
