@@ -5,23 +5,22 @@
       <Option v-for="item in provincesList" :value="item.id" :key="item.id">{{ item.name }}</Option>
     </Select>
     <Select v-model="city" style="width:150px" @on-change="changeCity(city)" placeholder="城市">
-      <Option v-for="item in citiesList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+      <Option v-for="item in citiesList" :value="item.name" :key="item.id">{{ item.name }}</Option>
     </Select>
     <div>直接搜索</div>
-
     <div class="fuzzy-search">
       <Input
         v-model="cityValue"
         placeholder="请输入城市中文或拼音"
         style="width: 220px;margin-left:10px;"
         @on-focus="showFlag=true"
-        @on-blur="showFlag=false"
+        @on-blur="showFlags()"
       />
       <div class="fuzzy-box" v-if="searchCitiesList.length > 0 && showFlag">
         <div
           class="fuzzy-reslut"
           v-for="item in showCitiesList"
-          @click="changeCity(item.name)"
+          @click="selectCity(item.name)"
           :key="item.id"
         >{{item.name}}</div>
       </div>
@@ -67,19 +66,18 @@ export default {
     },
     // 改变城市
     changeCity(item) {
-      let cityName = this.citiesList.filter(x => x.id === item)[0].name;
-      cityName = cityName.substr(0, cityName.length - 1);
-      let provinceName = this.provincesList.filter(
-        item => item.id === this.province
-      )[0].name;
-      localStorage.setItem(
-        "city",
-        JSON.stringify({
-          city: cityName,
-          province: provinceName
-        })
-      );
-      this.$store.state.city = cityName;
+      item=item.substr(0,item.length-1)
+      this.$emit('changeCity',item)
+    },
+    showFlags(){
+      setTimeout(()=>{
+         this.showFlag=false
+      },500)
+    },
+    selectCity(city){
+      this.cityValue=city
+       localStorage.setItem('city',city)
+      this.$store.state.city = city;
       this.$router.push("/");
     }
   },

@@ -25,26 +25,16 @@ export default {
     //获取当前城市
     getCity() {
       let city = "";
-      let province = "";
       if (localStorage.getItem("city")) {
-        let obj = JSON.parse(localStorage.getItem("city"));
-        province = obj.province;
-        city = obj.city;
+        city = localStorage.getItem("city");
         this.$store.state.city = city;
-        this.getProvince(province);
+        this.getProvince(city);
       } else {
         this.$api.getPosition().then(res => {
           if (res.code === 200) {
             city = JSON.parse(res.data).city;
             city = city.substr(0, city.length - 1);
-            province = JSON.parse(res.data).province;
-            localStorage.setItem(
-              "city",
-              JSON.stringify({
-                city: city,
-                province: province
-              })
-            );
+            localStorage.setItem("city", city);
             this.$store.state.city = city;
             this.getProvince(province);
           }
@@ -52,12 +42,13 @@ export default {
       }
     },
     //获取省市
-    getProvince(province) {
-      this.$api.getProvince(province).then(res => {
+    getProvince(city) {
+      this.$api.relateProvince().then(res => {
         if (res.code === 200) {
-          let provinceId = res.data.province.filter((item, index) =>
-            JSON.stringify(item).includes(province)
+          let cityId = res.data.city.filter(item =>
+            JSON.stringify(item).includes(city)
           )[0].id;
+          let provinceId=cityId.substr(0,2)+'0000'
           this.getCities(provinceId);
         }
       });
@@ -77,9 +68,7 @@ export default {
     //设置附近城市
     setNearCity(city) {
       let count = 0;
-      let obj = JSON.parse(localStorage.getItem("city"));
-      obj.city = city;
-      localStorage.setItem("city", JSON.stringify(obj));
+      localStorage.setItem("city", city);
       this.$store.state.cities.map((item, index) => {
         if (item.name.includes(city)) {
           count = index;
@@ -95,6 +84,7 @@ export default {
       } else {
         this.nearData = this.$store.state.cities.slice(count - 1, count + 3);
       }
+      console.log(this.nearData);
       this.getSearchHotPlace();
     },
     changeCity(city) {
@@ -119,6 +109,7 @@ export default {
   },
   mounted() {
     this.getCity();
+    console.log(this.$store.state.city);
   },
   updated() {},
   watch: {
@@ -131,7 +122,7 @@ export default {
       return this.$store.state.city;
     },
     nearList() {
-      return this.nearData.filter(item => item.name !== this.city);
+      return this.nearData.filter(item => !item.name.includes(this.city));
     }
   }
 };
