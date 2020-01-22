@@ -116,6 +116,7 @@ export default {
   margin: 0 auto;
   position: relative;
   display: flex;
+  margin-bottom:25px;
   .mainNav-all {
     border: 1px solid rgb(226, 226, 226);
     background: white;
@@ -153,7 +154,7 @@ export default {
           width: 400px;
           height: 416px;
           position: absolute;
-          bottom: 0;
+          bottom: 15px;
           left: 228px;
           padding: 30px;
           .nav-main {

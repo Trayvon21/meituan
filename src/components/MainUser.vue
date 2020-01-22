@@ -47,6 +47,7 @@ export default {
     width: 230px;
     height: 240px;
     text-align: center;
+    border: 1px solid #e5e5e5;
     img {
       margin-top: 30px;
       width: 47px;
@@ -68,6 +69,7 @@ export default {
     width: 230px;
     height: 167px;
     text-align: center;
+    border: 1px solid #e5e5e5;
     img {
       margin-top: 10px;
       width: 95px;

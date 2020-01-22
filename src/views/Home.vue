@@ -2,11 +2,13 @@
   <div class="container">
     <headers />
     <router-view></router-view>
+    <footers></footers>
   </div>
 </template>
 
 <script>
 import headers from "../components/common/Headers";
+import footers from "../components/common/Footers";
 
 export default {
   data() {
@@ -18,7 +20,8 @@ export default {
   },
   props: {},
   components: {
-    headers
+    headers,
+    footers
   },
   methods: {
     getPosition() {

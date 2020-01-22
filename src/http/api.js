@@ -48,7 +48,7 @@ export default {
     },
     // ### 根据关键词搜索
     // http://localhost:8888/results?city=城市名&keyword=关键词
-    BySearchSug(cityName, keyWord) {
+    searchResults(cityName, keyWord) {
         return service.req(`/results?city=${cityName}&keyword=${keyWord}`)
     },
     // ### 商铺详情
@@ -78,7 +78,7 @@ export default {
     // http://localhost:8888/users/register  (post)
     // 参数:- username: 用户名- password: 密码- email: 邮箱
     register(username, password, email) {
-        return service.req('/users/login', {
+        return service.req('/users/register', {
             username,
             password,
             email

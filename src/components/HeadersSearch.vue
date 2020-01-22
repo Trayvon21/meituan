@@ -1,7 +1,7 @@
 <template>
   <div class="header-search">
     <Input
-      @on-focus="show=true"
+      @on-focus="showFocus()"
       @on-blur="showBlur()"
       @on-search="pushto(keyword)"
       search
@@ -10,8 +10,9 @@
       size="large"
       placeholder="搜索商家或地址"
     />
-    <div v-if="show&&list.length===0" class="search-box">
+    <div v-if="show&&list.length===0" class="searching">
       <div>热门搜索</div>
+      <div v-for="item in hotPlace" @click="pushto(item.name)" :key="item.id">{{ item.name }}</div>
     </div>
     <div v-if="show&&list.length>0" class="searching">
       <div v-for="item in list" :key="item.id" @click="pushto(item.name)">{{item.name}}</div>
@@ -27,7 +28,7 @@ export default {
     return {
       show: false,
       keyword: "",
-      list: []
+      list: [],
     };
   },
   components: {},
@@ -36,6 +37,10 @@ export default {
     pushto(name) {
       this.keyword = name;
       this.$router.push({ name: "descs", params: { name: name } });
+    },
+    showFocus() {
+      this.show = true;
+      // this.getSearchHotPlace();
     },
     showBlur() {
       setTimeout(() => {
@@ -50,7 +55,7 @@ export default {
       if (val === "") {
         this.list = [];
       } else {
-        this.$api.searchSug("成都", val).then(res => {
+        this.$api.searchSug(this.$store.state.city, val).then(res => {
           if (res.code === 200) {
             this.list = res.data.top.slice(0, 10);
           }
@@ -58,7 +63,11 @@ export default {
       }
     }
   },
-  computed: {}
+  computed: {
+    hotPlace() {
+      return this.$store.state.hotPlace;
+    }
+  }
 };
 </script>
 
@@ -96,7 +105,7 @@ export default {
     width: 470px;
     height: 70px;
     background: white;
-    border: 1px solid gray;
+    border: 1px solid #e5e5e5;
     z-index: 999;
   }
   .searching {
@@ -105,7 +114,7 @@ export default {
     left: 0;
     width: 470px;
     background: white;
-    border: 1px solid gray;
+    border: 1px solid #e5e5e5;
     z-index: 999;
     div {
       padding-left: 10px;
