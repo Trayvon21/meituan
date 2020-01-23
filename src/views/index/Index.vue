@@ -13,11 +13,20 @@ export default {
     return {};
   },
   props: {},
-  components: { mianNav,haveStyle },
+  components: { mianNav, haveStyle },
   methods: {},
   mounted() {},
   watch: {},
-  computed: {}
+  computed: {},
+  beforeRouteEnter(to, from, next) {
+    if (from.name === "city") {
+      next(vm => {
+        vm.$router.go(0);
+      });
+    } else {
+      next();
+    }
+  }
 };
 </script>
 

@@ -1,35 +1,43 @@
 <template>
-  <div>
-  </div>
+ <div>
+
+'CityHistory'
+
+ </div>
 </template>
 
 <script>
+ export default {
+name:'CityHistory',
+props: {
 
-export default {
-  data() {
-    return {
-      citiesList: []
-    };
-  },
-  props: {},
-  components: {
-    cityBySearch,
-    cityHotCities
-  },
-  methods: {
-    changeCity(item) {
-      localStorage.setItem("city", item);
-      this.$store.state.city = item;
-      this.$router.push("/");
-    }
-  },
-  mounted() {
-  
-  },
-  watch: {},
-  computed: {}
-};
+    },
+   data () {
+     return {
+
+     }
+   },
+   components: {
+
+   },
+   methods: {
+
+   },
+   mounted() {
+
+   },
+   filters:{
+
+   },
+   watch: {
+
+   },
+   computed: {
+
+   }
+ }
 </script>
 
 <style scoped lang='scss'>
+
 </style>

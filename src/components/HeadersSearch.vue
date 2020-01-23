@@ -28,7 +28,7 @@ export default {
     return {
       show: false,
       keyword: "",
-      list: [],
+      list: []
     };
   },
   components: {},
@@ -36,7 +36,10 @@ export default {
     searchSug() {},
     pushto(name) {
       this.keyword = name;
-      this.$router.push({ name: "descs", params: { name: name } });
+      console.log(this.$route);
+      if (this.$route.params.name !== name) {
+        this.$router.push({ name: "descs", params: { name: name } });
+      }
     },
     showFocus() {
       this.show = true;
@@ -48,7 +51,11 @@ export default {
       }, 200);
     }
   },
-  mounted() {},
+  mounted() {
+    if (this.$route.params.name) {
+      this.keyword = this.$route.params.name;
+    }
+  },
   filters: {},
   watch: {
     keyword(val) {
