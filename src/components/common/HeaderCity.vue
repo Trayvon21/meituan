@@ -24,19 +24,19 @@ export default {
   methods: {
     //获取当前城市
     getCity() {
-      let city = "";
-      if (localStorage.getItem("city")) {
-        city = localStorage.getItem("city");
-        this.$store.state.city = city;
-        this.getProvince(city);
+      if (sessionStorage.getItem("city")) {
+        this.$store.state.city = sessionStorage.getItem("city");
+        this.getProvince(sessionStorage.getItem("city"));
+        console.log(1);
       } else {
         this.$api.getPosition().then(res => {
           if (res.code === 200) {
-            city = JSON.parse(res.data).city;
+            let city = JSON.parse(res.data).city;
             city = city.substr(0, city.length - 1);
-            localStorage.setItem("city", city);
+            sessionStorage.setItem("city", city);
             this.$store.state.city = city;
-            this.getProvince(province);
+            this.getProvince(city);
+            console.log(2,city);
           }
         });
       }
@@ -48,7 +48,7 @@ export default {
           let cityId = res.data.city.filter(item =>
             JSON.stringify(item).includes(city)
           )[0].id;
-          let provinceId=cityId.substr(0,2)+'0000'
+          let provinceId = cityId.substr(0, 2) + "0000";
           this.getCities(provinceId);
         }
       });
@@ -68,7 +68,7 @@ export default {
     //设置附近城市
     setNearCity(city) {
       let count = 0;
-      localStorage.setItem("city", city);
+      sessionStorage.setItem("city", city);
       this.$store.state.cities.map((item, index) => {
         if (item.name.includes(city)) {
           count = index;
@@ -84,7 +84,6 @@ export default {
       } else {
         this.nearData = this.$store.state.cities.slice(count - 1, count + 3);
       }
-      console.log(this.nearData);
       this.getSearchHotPlace();
     },
     changeCity(city) {
@@ -109,14 +108,9 @@ export default {
   },
   mounted() {
     this.getCity();
-    console.log(this.$store.state.city);
   },
   updated() {},
-  watch: {
-    city(val) {
-      this.getCity();
-    }
-  },
+  watch: {},
   computed: {
     city() {
       return this.$store.state.city;

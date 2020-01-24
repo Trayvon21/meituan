@@ -21,7 +21,7 @@
               </div>
               <Divider class="divider" />
               <div class="nav-childs">
-                <div v-for="childs in items.child" :key="childs.id" class="childs-each">{{ childs }}</div>
+                <div v-for="childs in items.child" :key="childs.id" class="childs-each" @click="$goResult(childs)">{{ childs }}</div>
               </div>
             </div>
           </div>

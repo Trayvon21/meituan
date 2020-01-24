@@ -130,7 +130,7 @@
 
 <script>
 import indexCity from "./HeaderCity";
-import headersSearch from "../HeadersSearch";
+import headersSearch from "./HeadersSearch";
 export default {
   data() {
     return {

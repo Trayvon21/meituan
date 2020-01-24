@@ -3,7 +3,7 @@
     <Input
       @on-focus="showFocus()"
       @on-blur="showBlur()"
-      @on-search="pushto(keyword)"
+      @on-search="$goResult(keyword)"
       search
       v-model="keyword"
       enter-button
@@ -12,10 +12,10 @@
     />
     <div v-if="show&&list.length===0" class="searching">
       <div>热门搜索</div>
-      <div v-for="item in hotPlace" @click="pushto(item.name)" :key="item.id">{{ item.name }}</div>
+      <div v-for="item in hotPlace" @click="$goResult(item.name)" :key="item.id">{{ item.name }}</div>
     </div>
     <div v-if="show&&list.length>0" class="searching">
-      <div v-for="item in list" :key="item.id" @click="pushto(item.name)">{{item.name}}</div>
+      <div v-for="item in list" :key="item.id" @click="$goResult(item.name)">{{item.name}}</div>
     </div>
   </div>
 </template>
@@ -38,12 +38,11 @@ export default {
       this.keyword = name;
       console.log(this.$route);
       if (this.$route.params.name !== name) {
-        this.$router.push({ name: "descs", params: { name: name } });
+        this.$router.push({ name: "result", params: { name: name } });
       }
     },
     showFocus() {
       this.show = true;
-      // this.getSearchHotPlace();
     },
     showBlur() {
       setTimeout(() => {
@@ -55,6 +54,9 @@ export default {
     if (this.$route.params.name) {
       this.keyword = this.$route.params.name;
     }
+  },
+  updated() {
+    this.keyword = this.$route.params.name;
   },
   filters: {},
   watch: {

@@ -1,14 +1,14 @@
 <template>
-  <div class="descs-container">
-    <div class="descs-top">
+  <div class="result-container">
+    <div class="result-top">
       <a href="/">{{$store.state.city}}美团</a>&gt;
       <a href>{{$store.state.city}}{{keyWord}}</a>
     </div>
-    <div class="descs-main">
-      <div class="descs-left">
+    <div class="result-main">
+      <div class="result-left">
         <div>
           <!-- <div>{{ item }}</div> -->
-          <descs-box v-for="item in pois" :key="item.id" :item="item"></descs-box>
+          <result-box v-for="item in pois" :key="item.id" :item="item"></result-box>
         </div>
       </div>
       <div id="maps"></div>
@@ -17,14 +17,14 @@
 </template>
 
 <script>
-import descsBox from "../../components/descs/DescsBox";
+import resultBox from "../../components/result/ResultBox";
 export default {
-  name: "Descs",
+  name: "Result",
   props: {},
   data() {
     return { keyWord: "", pois: [] };
   },
-  components: { descsBox },
+  components: { resultBox },
   methods: {},
   mounted() {
     this.keyWord = this.$route.params.name;
@@ -81,20 +81,20 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.descs-container {
+.result-container {
   width: 1190px;
   margin: 0 auto;
-  .descs-top {
+  .result-top {
     width: 100%;
     height: 20px;
     margin: 10px;
   }
-  .descs-main {
+  .result-main {
     display: flex;
     justify-content: space-between;
   }
 }
-.descs-left {
+.result-left {
   width: 950px;
   border: 1px solid #e5e5e5;
   background: white;

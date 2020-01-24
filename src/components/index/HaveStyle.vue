@@ -9,9 +9,9 @@
     </ul>
     <div class="style-main">
       <div v-for="items in showList" :key="items.id" class="style-each">
-        <div class="each-pic">
+        <div class="each-pic" @click="$goDetail(items.name)">
           <img :src="items.photos[0].url" v-if="items.photos.length>0" alt />
-          <img src="//p0.meituan.net/deal/201212/29/133712_6240123.jpg@460w_260h_1e_1c" alt v-else />
+          <img src="../../assets/none.jpg" alt v-else />
         </div>
         <div class="each-title">{{items.name}}</div>
         <div class="each-type">{{items.type}}</div>
@@ -65,17 +65,18 @@ export default {
           }
         });
       });
-    }
+    },
+   
   },
-  mounted() {
-    this.getData();
-  },
+  mounted() {},
   updated() {},
   filters: {},
   watch: {
-    // showList(val){
-    //   this.$router.go(0)
-    // }
+    city(val) {
+      if (val !== "") {
+        this.getData();
+      }
+    }
   },
   computed: {
     showList() {
@@ -86,6 +87,9 @@ export default {
           return this.list.filter(item => item.name === this.keyWord)[0].list;
         }
       }
+    },
+    city() {
+      return this.$store.state.city;
     }
   }
 };
@@ -148,6 +152,7 @@ export default {
       overflow: hidden;
       border-radius: 4px;
       img {
+        cursor: pointer;
         width: 370px;
       }
     }

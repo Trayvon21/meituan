@@ -27,14 +27,25 @@ const routes = [{
         }]
     },
     {
-        //详情页
+        //搜索页
         path: '/s/:name',
         component: Home,
         children: [{
             path: '',
-            name: 'descs',
+            name: 'result',
             component: () =>
-                import ('../views/desc/Descs')
+                import ('../views/result/Result')
+        }]
+    },
+    {
+        //详情页
+        path: '/detail/',
+        component: Home,
+        children: [{
+            path: '',
+            name: 'detail',
+            component: () =>
+                import ('../views/detail/Detail')
         }]
     },
     {

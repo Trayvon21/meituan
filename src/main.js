@@ -10,6 +10,7 @@ import axios from './http'
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 
+import './js/jump'
 //引入接口文档
 import api from './http/api'
 Vue.prototype.$api = api

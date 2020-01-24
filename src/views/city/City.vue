@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     changeCity(item) {
-      localStorage.setItem("city", item);
+      sessionStorage.setItem("city", item);
       this.$store.state.city = item;
       this.$router.push("/");
     },

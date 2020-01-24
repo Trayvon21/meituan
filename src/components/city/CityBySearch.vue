@@ -66,17 +66,17 @@ export default {
     },
     // 改变城市
     changeCity(item) {
-      item=item.substr(0,item.length-1)
-      this.$emit('changeCity',item)
+      item = item.substr(0, item.length - 1);
+      this.$emit("changeCity", item);
     },
-    showFlags(){
-      setTimeout(()=>{
-         this.showFlag=false
-      },500)
+    showFlags() {
+      setTimeout(() => {
+        this.showFlag = false;
+      }, 500);
     },
-    selectCity(city){
-      this.cityValue=city
-       localStorage.setItem('city',city)
+    selectCity(city) {
+      this.cityValue = city;
+      sessionStorage.setItem("city", city);
       this.$store.state.city = city;
       this.$router.push("/");
     }

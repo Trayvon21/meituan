@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import mianNav from "../../components/MainNav";
-import haveStyle from "../../components/HaveStyle";
+import mianNav from "../../components/index/MainNav";
+import haveStyle from "../../components/index/HaveStyle";
 export default {
   data() {
     return {};
@@ -19,7 +19,7 @@ export default {
   watch: {},
   computed: {},
   beforeRouteEnter(to, from, next) {
-    if (from.name === "city") {
+    if (from.name === "city"||from.name === "detail"||from.name === "result") {
       next(vm => {
         vm.$router.go(0);
       });
