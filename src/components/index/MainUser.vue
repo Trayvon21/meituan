@@ -2,9 +2,14 @@
   <div class="user-container">
     <div class="user-box">
       <img src="https://s0.meituan.net/bs/fe-web-meituan/e350c4a/img/avatar.jpg" alt />
-      <h2>Hi！你好</h2>
-      <div class="btn" @click="goto('/register')">注册</div>
-      <div class="btn" @click="goto('/login')">立即登录</div>
+      <h2>Hi！你好{{user}}</h2>
+      <div v-if="user===null">
+        <div class="btn" @click="goto('/register')">注册</div>
+        <div class="btn" @click="goto('/login')">立即登录</div>
+      </div>
+      <div v-else>
+        <div class="btn" @click="exit">退出</div>
+      </div>
     </div>
     <div class="app-share">
       <img src="https://s1.meituan.net/bs/fe-web-meituan/60ac9a0/img/download-qr.png" alt />
@@ -27,12 +32,22 @@ export default {
   methods: {
     goto(item) {
       this.$router.push(item);
+    },
+    exit() {
+      this.$store.state.user = null;
+      localStorage.removeItem("user");
     }
   },
-  mounted() {},
+  mounted() {
+   
+  },
   filters: {},
   watch: {},
-  computed: {}
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  }
 };
 </script>
 

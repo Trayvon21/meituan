@@ -83,20 +83,20 @@ export default {
         user: [
           {
             required: true,
-            message: "Please fill in the user name",
+            message: "请输入用户名",
             trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: "Please fill in the password.",
+            message: "请输入密码",
             trigger: "blur"
           },
           {
             type: "string",
             min: 6,
-            message: "The password length cannot be less than 6 bits",
+            message: "密码最短为6位",
             trigger: "blur"
           }
         ]
@@ -112,14 +112,15 @@ export default {
           this.$api.login(this.form.user, this.form.password).then(res => {
             if (res.code === 200) {
               this.$Message.success(res.msg);
+              localStorage.setItem("user", this.form.user);
+              this.$store.state.user=this.form.user
               this.$router.push("/");
-              
             } else {
               this.$Message.error(res.msg);
             }
           });
         } else {
-          this.$Message.error("Fail!");
+          this.$Message.error("用户名/密码输入错误");
         }
       });
     }
@@ -145,12 +146,22 @@ export default {
       background-size: initial;
       display: inline-block;
       overflow: hidden;
+      cursor: pointer;
     }
   }
   .login-main {
     display: flex;
+    justify-content: space-around;
     .formItem {
       display: block;
+    }
+    .login-btn {
+      width: 190px;
+    }
+    .gotoRegister {
+      span {
+        cursor: pointer;
+      }
     }
   }
   .login-footer {

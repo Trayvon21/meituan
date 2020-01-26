@@ -2,7 +2,7 @@
   <div class="register-container">
     <!-- 注册头部 -->
     <div class="register-header">
-      <div class="logoimg"></div>
+      <div class="logoimg"  @click="$router.push('/')"></div>
       <div class="login-block">
         <div class="login-block-had">已有美团账号？</div>
         <div class="logins" @click="$router.push('/login')">登录</div>
@@ -86,12 +86,15 @@ export default {
     submit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Success!");
           this.$api
             .register(this.formData.tel, this.formData.passwd, "")
             .then(res => {
               if (res.code === 200) {
+                console.log(res);
                 this.$Message.success(res.msg);
+                this.$router.push('/login')
+              }else{
+                  this.$Message.error(res.msg);
               }
             });
         } else {
@@ -125,6 +128,7 @@ export default {
       background: url("//s0.meituan.net/bs/fe-web-meituan/fa5f0f0/img/logo.png")
         no-repeat;
       background-size: contain;
+      cursor: pointer;
     }
     .login-block {
       line-height: 39px;

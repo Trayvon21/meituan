@@ -2,9 +2,13 @@
   <div class="header-bg">
     <div class="header">
       <index-city class="index-city" />
-      <div class="user-control">
+      <div class="user-control" v-if="user===null">
         <div class="login" @click="$router.push('/login')">立即登录</div>
         <div class="register" @click="$router.push('/register')">注册</div>
+      </div>
+      <div class="user-control" v-else>
+        <div class="login">{{user}}</div>
+        <div class="register"  @click="exit">退出</div>
       </div>
       <div class="right-nav">
         <div @click="msg" class="nav">
@@ -133,12 +137,10 @@ import indexCity from "./HeaderCity";
 import headersSearch from "./HeadersSearch";
 export default {
   data() {
-    return {
-     
-    };
+    return {};
   },
   props: {},
-  components: { indexCity,headersSearch },
+  components: { indexCity, headersSearch },
   methods: {
     gotoHome() {
       if (this.$route.path === "/") {
@@ -151,11 +153,21 @@ export default {
       this.$Message.error({
         content: "功能开发中，敬请期待!"
       });
+    },
+    exit() {
+      this.$store.state.user = null;
+      localStorage.removeItem("user");
     }
   },
-  mounted() {},
+  mounted() {
+    this.$store.state.user = localStorage.getItem("user");
+  },
   watch: {},
-  computed: {}
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  }
 };
 </script>
 

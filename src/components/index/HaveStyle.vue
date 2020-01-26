@@ -79,7 +79,10 @@ export default {
   },
   computed: {
     showList() {
-      return this.list.filter(item => item.name === this.keyWord)[0].list;
+      let count = this.list.filter(item => item.name === this.keyWord);
+      if (count.length > 0) {
+        return count[0].list;
+      } else return;
     },
     city() {
       return this.$store.state.city;

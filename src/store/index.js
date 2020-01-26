@@ -10,7 +10,8 @@ export default new Vuex.Store({
         //城市列表
         cities: [],
         loading: false,
-        hotPlace: ''
+        hotPlace: '',
+        user: ''
     },
     mutations: {},
     actions: {},
