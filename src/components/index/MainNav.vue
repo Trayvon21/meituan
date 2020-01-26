@@ -21,7 +21,12 @@
               </div>
               <Divider class="divider" />
               <div class="nav-childs">
-                <div v-for="childs in items.child" :key="childs.id" class="childs-each" @click="$goResult(childs)">{{ childs }}</div>
+                <div
+                  v-for="childs in items.child"
+                  :key="childs.id"
+                  class="childs-each"
+                  @click="$goResult(childs)"
+                >{{ childs }}</div>
               </div>
             </div>
           </div>
@@ -32,7 +37,7 @@
       <div v-for="item in navLink" :key="item.id">{{item.name}}</div>
     </div>
     <main-slideshow />
-    <div class="shandow-pic">
+    <div class="shandow-pic" v-if="flag">
       <div>
         <img src="//p0.meituan.net/codeman/e473bb428f070321269b23370ff02ba956209.jpg" alt />
       </div>
@@ -78,7 +83,8 @@ export default {
         "#00BF96"
       ],
       childs: {},
-      showList: []
+      showList: [],
+      flag: true
     };
   },
   props: {},
@@ -103,6 +109,14 @@ export default {
   },
   mounted() {
     this.getMenuData();
+    // 控制盒子显示和隐藏;
+    // window.onresize = () => {
+    //   if (document.body.clientWidth < 1190) {
+    //     this.flag = true;
+    //   } else {
+    //     this.flag = false;
+    //   }
+    // };
   },
   watch: {},
   computed: {}
@@ -116,7 +130,7 @@ export default {
   margin: 0 auto;
   position: relative;
   display: flex;
-  margin-bottom:25px;
+  margin-bottom: 25px;
   .mainNav-all {
     border: 1px solid rgb(226, 226, 226);
     background: white;

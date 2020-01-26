@@ -7,7 +7,7 @@
         <i :class="keyWord===item.key?'active':''"></i>
       </li>
     </ul>
-    <div class="style-main">
+    <div class="style-main" v-if="list.length>0">
       <div v-for="items in showList" :key="items.id" class="style-each">
         <div class="each-pic" @click="$goDetail(items.name)">
           <img :src="items.photos[0].url" v-if="items.photos.length>0" alt />
@@ -65,8 +65,7 @@ export default {
           }
         });
       });
-    },
-   
+    }
   },
   mounted() {},
   updated() {},
@@ -80,13 +79,7 @@ export default {
   },
   computed: {
     showList() {
-      if (this.list.length > 0) {
-        if (this.keyWord === "景点") {
-          return this.list[0].list;
-        } else {
-          return this.list.filter(item => item.name === this.keyWord)[0].list;
-        }
-      }
+      return this.list.filter(item => item.name === this.keyWord)[0].list;
     },
     city() {
       return this.$store.state.city;

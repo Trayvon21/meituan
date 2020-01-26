@@ -6,12 +6,35 @@
     </div>
     <div class="result-main">
       <div class="result-left">
-        <div>
-          <!-- <div>{{ item }}</div> -->
-          <result-box v-for="item in pois" :key="item.id" :item="item"></result-box>
+        <div class="result-rank">
+          <div @click="autoRank">智能排序</div>
+          <div>
+            <div @click="priceRank">
+              <span :style="!auto?'font-weight:700;':''">{{auto?'价格排序':price?'价格最低':'价格最高'}}</span>
+              <div class="rank-btn">
+                <span :class="!auto&&price?'bottom-black':''" class="top"></span>
+                <span :class="!auto&&!price?'top-black':''" class="bottom"></span>
+              </div>
+            </div>
+          </div>
+          <div @click="hotRank" :style="hot?'font-weight:700;':''">人气最高</div>
+          <div @click="commitRank" :style="commit?'font-weight:700;':''">评价最高</div>
+        </div>
+        <div class="divider">
+          <Divider />
+        </div>
+        <result-box
+          v-for="item in showPois"
+          :key="item.id"
+          :item="item"
+        ></result-box>
+      </div>
+      <div>
+        <div id="maps"></div>
+        <div class="youLike">
+          <div>猜你喜欢</div>
         </div>
       </div>
-      <div id="maps"></div>
     </div>
   </div>
 </template>
@@ -22,10 +45,43 @@ export default {
   name: "Result",
   props: {},
   data() {
-    return { keyWord: "", pois: [] };
+    return {
+      keyWord: "",
+      pois: [],
+      showPois: [],
+      auto: true,
+      price: true,
+      hot: false,
+      commit: false
+    };
   },
   components: { resultBox },
-  methods: {},
+  methods: {
+    autoRank() {
+      this.auto = true;
+      this.price = true;
+      this.hot = false;
+      this.commit = false;
+    },
+    priceRank() {
+      this.auto = false;
+      this.price = !this.price;
+      this.hot = false;
+      this.commit = false;
+    },
+    hotRank() {
+      this.auto = true;
+      this.price = true;
+      this.hot = true;
+      this.commit = false;
+    },
+    commitRank() {
+      this.auto = true;
+      this.price = true;
+      this.hot = false;
+      this.commit = true;
+    }
+  },
   mounted() {
     this.keyWord = this.$route.params.name;
     let _this = this;
@@ -38,6 +94,7 @@ export default {
         .then(res => {
           if (res.code === 200) {
             _this.pois = res.data.pois;
+            _this.showPois = _this.pois;
             _this.pois.map((item, index) => {
               let count = item.location.split(",");
               item.location = count;
@@ -99,6 +156,56 @@ export default {
   border: 1px solid #e5e5e5;
   background: white;
   border-radius: 5px;
+  .result-rank {
+    display: flex;
+    padding: 15px 20px 2px;
+
+    > div {
+      width: 96px;
+      height: 20px;
+      display: inline-block;
+      .rank-btn {
+        display: inline-block;
+        position: relative;
+        width: 10px;
+      }
+      .top {
+        position: absolute;
+        border: 3.2px solid transparent;
+        display: block;
+        height: 0;
+        right: 0;
+        top: -12px;
+        width: 0;
+        border-bottom-width: 4px;
+        border-bottom-color: #ccc;
+      }
+      .bottom {
+        position: absolute;
+        border: 3.2px solid transparent;
+        display: block;
+        height: 0;
+        right: 0;
+        top: -4px;
+        width: 0;
+        border-top-width: 4px;
+        border-top-color: #ccc;
+        margin-top: 1px;
+      }
+      .bottom-black {
+        border-bottom-color: #000;
+      }
+      .top-black {
+        border-top-color: #000;
+      }
+    }
+  }
+  .divider {
+    margin: 0 20px;
+    /deep/ div {
+      margin: 10px 0;
+    }
+  }
 }
 #maps {
   width: 222px;
@@ -121,5 +228,19 @@ export default {
 }
 /deep/.amap-marker-label {
   display: none;
+}
+.youLike {
+  margin-top: 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 16px 20px 0;
+  height: 3000px;
+  div {
+    font-size: 16px;
+    color: #333333;
+    line-height: 22px;
+    font-weight: 500;
+  }
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="box-container">
-    <div class="left-pic">
+    <div class="left-pic" @click="$goDetail(item.name)">
       <img v-if="item.photos[0]" :src="item.photos[0].url" alt />
       <img v-else src="../../assets/none.jpg" alt />
     </div>
     <div class="right-desc">
-      <div class="right-title">{{item.name}}</div>
+      <div class="right-title" @click="$goDetail(item.name)">{{item.name}}</div>
       <div class="right-rate" v-if="item.biz_ext">
         <Rate disabled show-text :v-model="item.biz_ext.rating*1" />
         <span class="commit">0人评论</span>
@@ -90,7 +90,7 @@ export default {
       white-space: nowrap;
       max-width: 110px;
     }
-    .address{
+    .address {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
